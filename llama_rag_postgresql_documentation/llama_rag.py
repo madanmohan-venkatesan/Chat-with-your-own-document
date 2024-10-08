@@ -14,7 +14,9 @@ from llama_index.core import Settings
 from llama_index.core import PromptTemplate
 
 #For downloading model
-from huggingface_hub import notebook_login
+# from huggingface_hub import notebook_login
+from huggingface_hub import login
+import os
 
 #For storing embedded vectors in vector store
 import torch
@@ -37,6 +39,8 @@ import time
 CURRENT_PATH="."
 DATA_PATH=path.join(CURRENT_PATH,"Data")
 INTERIM_PATH=path.join(CURRENT_PATH,"Interim")
+ACCESS_TOKEN = os.environ.get('HF_TOKEN')
+
 
 #Load the PDF Document
 logging.INFO("Starting to load data")
@@ -56,7 +60,8 @@ logging.INFO("Sucessfully assigned system prompt")
 
 
 #Download model
-notebook_login()
+# notebook_login()
+login(ACCESS_TOKEN)
 logging.INFO("Sucessfully Logged in to HuggingFace")
 
 
