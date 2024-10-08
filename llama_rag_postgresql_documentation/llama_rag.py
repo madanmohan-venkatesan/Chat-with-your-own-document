@@ -105,8 +105,13 @@ rerank = SentenceTransformerRerank( model="cross-encoder/ms-marco-MiniLM-L-2-v2"
 query_engine = index.as_query_engine(similarity_top_k=10, node_postprocessors=[rerank] )
 
 #Interaction
-resp_txt = "How to take backup of oracle DB?" # @param {"type":"string"}
-now = time.time()
-response = query_engine.query(resp_txt,)
-print(f"Response Generated: {response}")
-print(f"Elapsed: {round(time.time() - now, 2)}s")
+while True:
+  resp_txt=input("Enter your query. Press '99' to exit\n")
+  if str(resp_txt)!='99':
+    now = time.time()
+    response = query_engine.query(str(resp_txt),)
+    print(f"Response Generated: {response}")
+    print(f"Elapsed: {round(time.time() - now, 2)}s")
+  else:
+    print("Bye!")
+    break
