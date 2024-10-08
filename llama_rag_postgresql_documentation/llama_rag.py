@@ -1,3 +1,6 @@
+#Logging
+import logging
+logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.DEBUG)
 #For loading PDF
 from os import path
 from llama_index.core import SimpleDirectoryReader
@@ -36,17 +39,25 @@ DATA_PATH=path.join(CURRENT_PATH,"Data")
 INTERIM_PATH=path.join(CURRENT_PATH,"Interim")
 
 #Load the PDF Document
+logging.INFO("Starting to load data")
 documents = SimpleDirectoryReader("/content/Data").load_data()
+logging.INFO("Completed loading data")
+
 embed_model =FastEmbedEmbedding(model_name="BAAI/bge-small-en-v1.5")
 Settings.embed_model = embed_model
 Settings.chunk_size = 512
+logging.INFO("Sucessfully configured embeddings and LLM settings")
+
 
 #System prompt
 system_prompt = "You are a Q&A assistant. Your goal is to answer questions as accurately as possible based on the instructions and context provided."
 query_wrapper_prompt = PromptTemplate("<|USER|>{query_str}<|ASSISTANT|>")
+logging.INFO("Sucessfully assigned system prompt")
+
 
 #Download model
 notebook_login()
+logging.INFO("Sucessfully Logged in to HuggingFace")
 
 
 tokenizer = AutoTokenizer.from_pretrained(
@@ -73,6 +84,8 @@ tokenizer_kwargs={"max_length": 4096},
 )
 Settings.llm = llm
 Settings.chunk_size = 512
+logging.INFO("Sucessfully Loaded LLM")
+
 
 #Store embeddings in vector store
 from IPython.display import Markdown, display
@@ -98,6 +111,8 @@ location=":memory:"
 vector_store = QdrantVectorStore(client=client,collection_name="test")
 storage_context = StorageContext.from_defaults(vector_store=vector_store)
 index = VectorStoreIndex.from_documents(documents,storage_context=storage_context,)
+logging.INFO("Sucessfully configured Qdrant")
+
 
 #Re-ranking
 rerank = SentenceTransformerRerank( model="cross-encoder/ms-marco-MiniLM-L-2-v2", top_n=3)
