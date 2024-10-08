@@ -44,26 +44,26 @@ def llama_rag():
   
   
   #Load the PDF Document
-  logging.INFO("Starting to load data")
+  logging.info("Starting to load data")
   documents = SimpleDirectoryReader("/content/Data").load_data()
-  logging.INFO("Completed loading data")
+  logging.info("Completed loading data")
   
   embed_model =FastEmbedEmbedding(model_name="BAAI/bge-small-en-v1.5")
   Settings.embed_model = embed_model
   Settings.chunk_size = 512
-  logging.INFO("Sucessfully configured embeddings and LLM settings")
+  logging.info("Sucessfully configured embeddings and LLM settings")
   
   
   #System prompt
   system_prompt = "You are a Q&A assistant. Your goal is to answer questions as accurately as possible based on the instructions and context provided."
   query_wrapper_prompt = PromptTemplate("<|USER|>{query_str}<|ASSISTANT|>")
-  logging.INFO("Sucessfully assigned system prompt")
+  logging.info("Sucessfully assigned system prompt")
   
   
   #Download model
   # notebook_login()
   login(ACCESS_TOKEN)
-  logging.INFO("Sucessfully Logged in to HuggingFace")
+  logging.info("Sucessfully Logged in to HuggingFace")
   
   
   tokenizer = AutoTokenizer.from_pretrained(
@@ -90,7 +90,7 @@ def llama_rag():
   )
   Settings.llm = llm
   Settings.chunk_size = 512
-  logging.INFO("Sucessfully Loaded LLM")
+  logging.info("Sucessfully Loaded LLM")
   
   
   #Store embeddings in vector store
@@ -117,7 +117,7 @@ def llama_rag():
   vector_store = QdrantVectorStore(client=client,collection_name="test")
   storage_context = StorageContext.from_defaults(vector_store=vector_store)
   index = VectorStoreIndex.from_documents(documents,storage_context=storage_context,)
-  logging.INFO("Sucessfully configured Qdrant")
+  logging.info("Sucessfully configured Qdrant")
   
   
   #Re-ranking
