@@ -6,7 +6,7 @@ authors = ["Madan Mohan Venkatesan <madanrokz@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.12"
+python = ">=3.9,<3.9.7 || >3.9.7,<3.12"
 unstructured = {extras = ["md"], version = "^0.15.13"}
 llama-index-core = "^0.11.16"
 llama-index = "^0.11.16"
@@ -23,7 +23,21 @@ einops = "^0.8.0"
 llama-index-vector-stores-qdrant = "^0.3.0"
 llama-index-llms-huggingface = "^0.3.4"
 llama-index-embeddings-fastembed = "^0.2.0"
+streamlit = "^1.39.0"
+torch = {version = "^2.5.0+cu118", source = "pytorch_gpu"}
+torchvision = {version = "^0.20.0+cu118", source = "pytorch_gpu"}
+torchaudio = {version = "^2.5.0+cu118", source = "pytorch_gpu"}
 
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.5"
+
+
+
+[[tool.poetry.source]]
+name = "pytorch_gpu"
+url = "https://download.pytorch.org/whl/cu118"
+priority = "explicit"
 
 [build-system]
 requires = ["poetry-core"]
