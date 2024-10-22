@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "llama-rag-postgresql-documentation"
+name = "chat-with-your-own-document"
 version = "0.1.0"
 description = ""
 authors = ["Madan Mohan Venkatesan <madanrokz@gmail.com>"]
